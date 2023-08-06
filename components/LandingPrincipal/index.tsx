@@ -81,6 +81,9 @@ export default function LandingPrincipal({ id }: { id: string }) {
               </div>
               <div className="w-1/3">2023</div>
             </div>
+            <div className="text-center text-white pt-4">
+                Hora: 21:00 hasta 05:00
+              </div>
             <div className="mx-4 text-center text-white my-4">
               <div className="text-center">
                 <h4>Ubicación</h4>
