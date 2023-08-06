@@ -2,9 +2,29 @@
 import Image from "next/image";
 import lourdes from "../../public/image/imagenLourdes.jpg";
 import "./inedx.css";
-import empleadoDeComercio from "../../public/image/empleadoComercio.webp";
+import axios from "axios";
+import { useState } from "react";
 
-export default function LandingPrincipal() {
+export default function LandingPrincipal({ id }: { id: string }) {
+  const [namePerson, setNamePerson] = useState("");
+  const [quantity, setQuantity] = useState("");
+
+  const handleSubmit = async () => {
+    await axios
+      .post(`http://143.198.224.81:3000/api/confirm_assistance`, {
+        name: namePerson,
+        family: id === "familia" ? true : false,
+        quantity,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <section className={`relative bg-black h-screen w-screen`}>
       <div>
@@ -54,8 +74,38 @@ export default function LandingPrincipal() {
             </div>
           </div>
         </div>
+        <div>
+          {id === "familia" ? (
+            <div className="w-[85%] mx-auto">
+              <input
+                type="text"
+                placeholder="Nombre/s"
+                className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
+                onChange={(e) => setNamePerson(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Cantidad de personas"
+                className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div className="w-[95%] mx-auto ">
+              <input
+                type="text"
+                placeholder="Nombre"
+                className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
+                onChange={(e) => setNamePerson(e.target.value)}
+              />
+            </div>
+          )}
+        </div>
         <div className="my-8 text-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            onClick={handleSubmit}
+          >
             Confirmar asistencia
           </button>
         </div>
