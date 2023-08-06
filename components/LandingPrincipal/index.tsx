@@ -10,6 +10,7 @@ export default function LandingPrincipal({ id }: { id: string }) {
   const [namePerson, setNamePerson] = useState("");
   const [quantity, setQuantity] = useState("");
   const [success, setSuccess] = useState(false);
+  const [name, setName] = useState("");
 
   const handleSubmit = async () => {
     //https://www.xvlourdes.online:3000/api/confirm_assistance
@@ -101,7 +102,10 @@ export default function LandingPrincipal({ id }: { id: string }) {
                   value={namePerson}
                   placeholder="Nombre"
                   className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
-                  onChange={(e) => setNamePerson(e.target.value)}
+                  onChange={(e) => {
+                    setNamePerson(e.target.value);
+                    setName(e.target.value);
+                  }}
                 />
                 <input
                   type="text"
@@ -118,7 +122,10 @@ export default function LandingPrincipal({ id }: { id: string }) {
                   placeholder="Nombre"
                   value={namePerson}
                   className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
-                  onChange={(e) => setNamePerson(e.target.value)}
+                  onChange={(e) => {
+                    setNamePerson(e.target.value);
+                    setName(e.target.value);
+                  }}
                 />
               </div>
             )}
@@ -134,7 +141,7 @@ export default function LandingPrincipal({ id }: { id: string }) {
           <div className="text-center">
             {success === true && (
               <p className="text-lg text-white">
-                Asistencia de {namePerson} confirmada
+                Asistencia de {name} confirmada
               </p>
             )}
           </div>
