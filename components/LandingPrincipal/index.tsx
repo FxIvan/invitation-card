@@ -11,9 +11,11 @@ export default function LandingPrincipal({ id }: { id: string }) {
   const [quantity, setQuantity] = useState("");
   const [success, setSuccess] = useState(false);
   const [name, setName] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     //https://www.xvlourdes.online:3000/api/confirm_assistance
+    if (namePerson === "") return setError("Por favor, ingrese su nombre");
     await axios
       .post(`https://www.xvlourdes.online/api/confirm_assistance`, {
         name: namePerson,
@@ -26,6 +28,7 @@ export default function LandingPrincipal({ id }: { id: string }) {
           setTimeout(() => {
             setNamePerson("");
             setQuantity("");
+            setError("");
           }, 3000);
         }
       })
@@ -95,6 +98,7 @@ export default function LandingPrincipal({ id }: { id: string }) {
             </div>
           </div>
           <div>
+            <p className="text-red-300 font-bold text-center">{error}</p>
             {id === "familia" ? (
               <div className="w-[85%] mx-auto">
                 <input
