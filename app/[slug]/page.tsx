@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import LandingPrincipal from "@/components/LandingPrincipal";
 
 export default async function UserAssitence({
@@ -5,5 +6,9 @@ export default async function UserAssitence({
 }: {
   params: { slug: string };
 }) {
-  return <LandingPrincipal id={params.slug} />;
+  return (
+    <>
+      <LandingPrincipal id={params.slug} />
+    </>
+  );
 }
