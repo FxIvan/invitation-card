@@ -4,21 +4,31 @@ import lourdes from "../../public/image/imagenLourdes.jpg";
 import "./inedx.css";
 import axios from "axios";
 import { useState } from "react";
+import { set } from "mongoose";
 
 export default function LandingPrincipal({ id }: { id: string }) {
   const [namePerson, setNamePerson] = useState("");
   const [quantity, setQuantity] = useState("");
 
+  const [success, setSuccess] = useState(false);
+
   const handleSubmit = async () => {
+    //https://www.xvlourdes.online:3000/api/confirm_assistance
     await axios
-      .post(`http://143.198.224.81:3000/api/confirm_assistance`, {
+      .post(`https://www.xvlourdes.online/api/confirm_assistance`, {
         name: namePerson,
         family: id === "familia" ? true : false,
         quantity,
       })
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
+        if (res.status === 200) {
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+            setNamePerson("");
+            setQuantity("");
+          }, 3000);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -79,12 +89,14 @@ export default function LandingPrincipal({ id }: { id: string }) {
             <div className="w-[85%] mx-auto">
               <input
                 type="text"
+                value={namePerson}
                 placeholder="Nombre/s"
                 className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
                 onChange={(e) => setNamePerson(e.target.value)}
               />
               <input
                 type="text"
+                value={quantity}
                 placeholder="Cantidad de personas"
                 className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
                 onChange={(e) => setQuantity(e.target.value)}
@@ -95,6 +107,7 @@ export default function LandingPrincipal({ id }: { id: string }) {
               <input
                 type="text"
                 placeholder="Nombre"
+                value={namePerson}
                 className="w-full border-2 border-slate-50 rounded-full px-4 py-2 my-4"
                 onChange={(e) => setNamePerson(e.target.value)}
               />
@@ -103,11 +116,14 @@ export default function LandingPrincipal({ id }: { id: string }) {
         </div>
         <div className="my-8 text-center">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             onClick={handleSubmit}
           >
             Confirmar asistencia
           </button>
+        </div>
+        <div className="text-center">
+          {success === true && <p className="text-lg text-white">Asistencia de {namePerson} confirmada</p>}
         </div>
       </div>
     </section>
