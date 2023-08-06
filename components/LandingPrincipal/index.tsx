@@ -4,7 +4,6 @@ import lourdes from "../../public/image/imagenLourdes.jpg";
 import "./inedx.css";
 import axios from "axios";
 import { useState } from "react";
-import { set } from "mongoose";
 
 export default function LandingPrincipal({ id }: { id: string }) {
   const [namePerson, setNamePerson] = useState("");
